@@ -1,13 +1,11 @@
 package com.multithreadings.unisexbathroom;
 
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class UnisexBathroomNoStarvation implements IUnisexBathroom {
 
 	int empsInBathroom = 0;
-
 	final static int MAX_CAPACITY = 3;
 	private ReentrantLock lock = new ReentrantLock();
 	private Condition menWaiting = lock.newCondition();
@@ -17,7 +15,6 @@ public class UnisexBathroomNoStarvation implements IUnisexBathroom {
 	private int womenUsingN = 0;
 	private int menUsingN = 0;
 
-	Semaphore maxEmps = new Semaphore(3);
 
 	void useBathroom(String name) throws InterruptedException {
 		System.out.println(name + " using bathroom. Current employees in bathroom = " + empsInBathroom);
@@ -82,7 +79,6 @@ public class UnisexBathroomNoStarvation implements IUnisexBathroom {
 		} else {
 			womenWaiting.signal();
 		}
-
 		lock.unlock();
 	}
 
